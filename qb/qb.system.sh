@@ -35,6 +35,7 @@ if [ -z "$CROSS_COMPILE" ] || [ -z "$OS" ]; then
 		'Darwin') OS='Darwin';;
 		'CYGWIN'*) OS='Cygwin';;
 		'Haiku') OS='Haiku';;
+		'MorphOS') OS='MorphOS';;
 		'MINGW'*) OS='Win32';;
 		*) OS="Win32";;
 	esac
