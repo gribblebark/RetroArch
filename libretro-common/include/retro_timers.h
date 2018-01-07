@@ -39,6 +39,8 @@
 #include <psp2/kernel/threadmgr.h>
 #elif defined(_3DS)
 #include <3ds.h>
+#elif defined(WARPUP)
+#include <unistd.h>
 #else
 #include <time.h>
 #endif
@@ -96,6 +98,8 @@ static INLINE void retro_sleep(unsigned msec)
 #elif defined(XENON)
    udelay(1000 * msec);
 #elif defined(GEKKO) || defined(__PSL1GHT__) || defined(__QNX__)
+   usleep(1000 * msec);
+#elif defined(WARPUP)
    usleep(1000 * msec);
 #elif defined(WIIU)
    OSSleepTicks(ms_to_ticks(msec));
