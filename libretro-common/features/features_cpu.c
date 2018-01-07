@@ -90,6 +90,10 @@
 #include <3ds/services/cfgu.h>
 #endif
 
+#if defined (WARPUP)
+#include <sys/time.h>
+#endif
+
 /* iOS/OSX specific. Lacks clock_gettime(), so implement it. */
 #ifdef __MACH__
 #include <sys/time.h>
@@ -190,6 +194,10 @@ retro_perf_tick_t cpu_features_get_perf_counter(void)
    struct timeval tv;
    gettimeofday(&tv,NULL);
    time_ticks = (1000000 * tv.tv_sec + tv.tv_usec);
+#elif defined(WARPUP)
+   struct timeval tv;
+   gettimeofday(&tv,NULL);
+   time_ticks = (1000000 * tv.tv_sec + tv.tv_usec);
 #endif
 
    return time_ticks;
@@ -238,6 +246,10 @@ retro_time_t cpu_features_get_time_usec(void)
    return ticks_to_us(OSGetSystemTime());
 #elif defined(SWITCH)
    return (svcGetSystemTick() * 10) / 192;
+#elif defined(WARPUP)
+   struct timeval tv;
+   gettimeofday(&tv,NULL);
+   return (1000000 * tv.tv_sec + tv.tv_usec);
 #else
 #error "Your platform does not have a timer function implemented in cpu_features_get_time_usec(). Cannot continue."
 #endif
